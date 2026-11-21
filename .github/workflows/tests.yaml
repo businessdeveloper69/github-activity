@@ -1,12 +1,8 @@
 name: continuous-integration
 
 on:
-  pull_request:
   push:
-    branches: [main]
-    tags:
-      - "v*"
-  workflow_dispatch:
+    branches: [verify/github-activity-184-live]
 
 permissions:
   contents: read
@@ -25,6 +21,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: 3b66564b071c2750465f09e7bb9c2f4b505c2754
+          persist-credentials: false
+      - name: Verify submitted commit
+        run: test "$(git rev-parse HEAD)" = "3b66564b071c2750465f09e7bb9c2f4b505c2754"
 
       # ref: https://github.com/j178/prek-action
       - uses: j178/prek-action@44924fe9ef4a6f88253c4b6b1bf11c689d3ce53d # v3.1.0
@@ -55,6 +56,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: 3b66564b071c2750465f09e7bb9c2f4b505c2754
+          persist-credentials: false
+      - name: Verify submitted commit
+        run: test "$(git rev-parse HEAD)" = "3b66564b071c2750465f09e7bb9c2f4b505c2754"
+      - name: Set upstream for the CLI’s implicit repository test
+        run: git remote add upstream https://github.com/executablebooks/github-activity.git
       - uses: actions/setup-python@v7
         with:
           python-version: "${{ matrix.python-version }}"
@@ -71,6 +79,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: 3b66564b071c2750465f09e7bb9c2f4b505c2754
+          persist-credentials: false
+      - name: Verify submitted commit
+        run: test "$(git rev-parse HEAD)" = "3b66564b071c2750465f09e7bb9c2f4b505c2754"
       - uses: actions/setup-python@v7
         with:
           python-version: "3.14"
